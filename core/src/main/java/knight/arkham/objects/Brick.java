@@ -41,7 +41,7 @@ public class Brick extends GameObject {
 
         boolean hasCollision = actualBounds.overlaps(ball.getBounds());
 
-        if (hasCollision){
+        if (!isDestroyed && hasCollision){
 
             ball.reverseVelocityY();
             hitByTheBall();

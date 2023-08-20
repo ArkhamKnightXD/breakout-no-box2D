@@ -7,20 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import knight.arkham.Breakout;
 import knight.arkham.objects.Ball;
 import knight.arkham.objects.Player;
 
-import static knight.arkham.helpers.Constants.FULL_SCREEN_HEIGHT;
-import static knight.arkham.helpers.Constants.FULL_SCREEN_WIDTH;
-
 public class Hud {
+
     public final Stage stage;
     private static Label scoreLabel;
     private static Label livesLabel;
 
     public Hud() {
 
-        Viewport viewport = new ExtendViewport(FULL_SCREEN_WIDTH, FULL_SCREEN_HEIGHT);
+        Breakout game = Breakout.INSTANCE;
+
+        Viewport viewport = new ExtendViewport(game.screenWidth, game.screenHeight);
 
         stage = new Stage(viewport);
 

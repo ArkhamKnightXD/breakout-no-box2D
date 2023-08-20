@@ -2,8 +2,10 @@ package knight.arkham.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.scenes.Hud;
 
 public class Ball extends GameObject {
@@ -11,6 +13,7 @@ public class Ball extends GameObject {
     private final float speed;
     private final Vector2 velocity;
     private final Vector2 initialPosition;
+    private final Sound boundariesCollisionSound;
 
     public Ball(Rectangle bounds) {
         super(bounds, "images/ball.png", "fall.wav");
@@ -18,6 +21,7 @@ public class Ball extends GameObject {
         velocity = new Vector2(getRandomDirection(), -1);
         livesQuantity = 2;
         initialPosition = new Vector2(bounds.x, bounds.y);
+        boundariesCollisionSound = AssetsHelper.loadSound("magic.wav");
     }
 
     private float getRandomDirection(){
@@ -59,8 +63,11 @@ public class Ball extends GameObject {
         boolean hasLeftCollision = actualBounds.x < 480;
         boolean hasTopCollision = actualBounds.y > 930;
 
-        if (hasLeftCollision || hasRightCollision)
+        if (hasLeftCollision || hasRightCollision){
+
             reverseVelocityX();
+            boundariesCollisionSound.play();
+        }
 
         else if (hasTopCollision) {
             reverseVelocityY();

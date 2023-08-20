@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import knight.arkham.screens.GameScreen;
 import knight.arkham.screens.MainMenuScreen;
 
 public class Breakout extends Game {
@@ -38,6 +37,6 @@ public class Breakout extends Game {
 
         uiSkin = new AssetDescriptor<>("images/ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("images/ui/uiskin.atlas"));
 
-        setScreen(new GameScreen());
+        setScreen(new MainMenuScreen());
     }
 }
