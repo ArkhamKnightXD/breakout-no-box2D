@@ -7,13 +7,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Breakout;
 import knight.arkham.helpers.AssetsHelper;
-import knight.arkham.helpers.GameContactListener;
 import knight.arkham.helpers.GameDataHelper;
 import knight.arkham.objects.*;
 import knight.arkham.objects.structures.Ceiling;
@@ -29,7 +26,6 @@ public class GameScreen extends ScreenAdapter {
     public SpriteBatch batch;
     private final Hud hud;
     private final PauseMenu pauseMenu;
-    private final World world;
     private final Player player;
     private final Ball ball;
     private final Ceiling ceiling;
@@ -47,18 +43,12 @@ public class GameScreen extends ScreenAdapter {
 
         batch = new SpriteBatch();
 
-        world = new World(new Vector2(0, 0), true);
+        player = new Player(new Rectangle(950, 350, 64, 16));
+        ball = new Ball(new Rectangle(950, 700, 20, 20));
 
-        GameContactListener contactListener = new GameContactListener();
-
-        world.setContactListener(contactListener);
-
-        player = new Player(new Rectangle(950, 350, 64, 16), world);
-        ball = new Ball(new Rectangle(950, 700, 20, 20), world);
-
-        ceiling = new Ceiling(world);
-        rightWall = new Wall(new Rectangle(1467, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT), world);
-        leftWall = new Wall(new Rectangle(453, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT), world);
+        ceiling = new Ceiling();
+        rightWall = new Wall(new Rectangle(1467, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT));
+        leftWall = new Wall(new Rectangle(453, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT));
 
         winSound = AssetsHelper.loadSound("win.wav");
 
@@ -89,7 +79,7 @@ public class GameScreen extends ScreenAdapter {
 
             for (int j = 0; j < 15; j++) {
 
-                temporalBricks.add(new Brick(positionX, positionY, world, spritePath, brickPoints));
+                temporalBricks.add(new Brick(positionX, positionY, spritePath, brickPoints));
                 positionX += 64;
             }
 
@@ -105,12 +95,10 @@ public class GameScreen extends ScreenAdapter {
         game.viewport.update(width, height);
     }
 
-    private void update() {
+    private void update(float deltaTime) {
 
-        world.step(1 / 60f, 6, 2);
-
-        player.update();
-        ball.update();
+        player.update(deltaTime);
+        ball.update(deltaTime);
 
         for (Brick brick : bricks)
             brick.update();
@@ -136,7 +124,7 @@ public class GameScreen extends ScreenAdapter {
         ScreenUtils.clear(0, 0, 0, 0);
 
         if (!isGamePaused) {
-            update();
+            update(deltaTime);
             draw();
         } else {
 
@@ -186,7 +174,6 @@ public class GameScreen extends ScreenAdapter {
         hud.dispose();
         pauseMenu.dispose();
         winSound.dispose();
-        world.dispose();
         batch.dispose();
 
         for (Brick brick : bricks)
