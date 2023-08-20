@@ -88,4 +88,10 @@ public class Ball extends GameObject {
     public void reverseVelocityX(){velocity.x *= -1;}
 
     public void reverseVelocityY(){velocity.y *= -1;}
+
+    @Override
+    public void dispose() {
+        boundariesCollisionSound.dispose();
+        super.dispose();
+    }
 }

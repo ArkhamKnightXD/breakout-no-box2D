@@ -16,13 +16,13 @@ public class Player extends GameObject {
 
     public void update(float deltaTime) {
 
-        boolean hasRightCollision = actualBounds.x > 1370;
-        boolean hasLeftCollision = actualBounds.x < 483;
+        boolean hasLeftWallCollision = actualBounds.x < 483;
+        boolean hasRightWallCollision = actualBounds.x > 1370;
 
-        if (!hasRightCollision && Gdx.input.isKeyPressed(Input.Keys.D))
+        if (!hasRightWallCollision && Gdx.input.isKeyPressed(Input.Keys.D))
             actualBounds.x += speed * deltaTime;
 
-        else if (!hasLeftCollision && Gdx.input.isKeyPressed(Input.Keys.A))
+        else if (!hasLeftWallCollision && Gdx.input.isKeyPressed(Input.Keys.A))
             actualBounds.x -= speed * deltaTime;
     }
 

@@ -97,20 +97,6 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private void gameOver() {
-
-        if (Player.score == 540) {
-
-            winSound.play();
-            GameDataHelper.saveHighScore();
-            game.setScreen(new MainMenuScreen());
-        } else if (Ball.livesQuantity < 0) {
-            GameDataHelper.saveHighScore();
-            game.setScreen(new MainMenuScreen());
-        }
-    }
-
-
     @Override
     public void render(float deltaTime) {
 
@@ -128,7 +114,20 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isGamePaused = !isGamePaused;
 
-        gameOver();
+        setGameOverScreen();
+    }
+
+    private void setGameOverScreen() {
+
+        if (Player.score == 540) {
+
+            winSound.play();
+            GameDataHelper.saveHighScore();
+            game.setScreen(new MainMenuScreen());
+        } else if (Ball.livesQuantity < 0) {
+            GameDataHelper.saveHighScore();
+            game.setScreen(new MainMenuScreen());
+        }
     }
 
     private void draw() {
