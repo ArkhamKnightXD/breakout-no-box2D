@@ -16,11 +16,14 @@ public class Player extends GameObject {
 
     public void update(float deltaTime) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
-            bounds.x += speed * deltaTime;
+        boolean hasRightCollision = actualBounds.x > 1370;
+        boolean hasLeftCollision = actualBounds.x < 483;
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A))
-            bounds.x -= speed * deltaTime;
+        if (!hasRightCollision && Gdx.input.isKeyPressed(Input.Keys.D))
+            actualBounds.x += speed * deltaTime;
+
+        else if (!hasLeftCollision && Gdx.input.isKeyPressed(Input.Keys.A))
+            actualBounds.x -= speed * deltaTime;
     }
 
     public void hitTheBall() {

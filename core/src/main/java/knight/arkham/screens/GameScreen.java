@@ -13,12 +13,8 @@ import knight.arkham.Breakout;
 import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.GameDataHelper;
 import knight.arkham.objects.*;
-import knight.arkham.objects.structures.Ceiling;
-import knight.arkham.objects.structures.Wall;
 import knight.arkham.scenes.Hud;
 import knight.arkham.scenes.PauseMenu;
-
-import static knight.arkham.helpers.Constants.*;
 
 public class GameScreen extends ScreenAdapter {
     private final Breakout game;
@@ -28,9 +24,6 @@ public class GameScreen extends ScreenAdapter {
     private final PauseMenu pauseMenu;
     private final Player player;
     private final Ball ball;
-    private final Ceiling ceiling;
-    private final Wall leftWall;
-    private final Wall rightWall;
     private final Array<Brick> bricks;
     private final Sound winSound;
     public static boolean isGamePaused;
@@ -43,12 +36,8 @@ public class GameScreen extends ScreenAdapter {
 
         batch = new SpriteBatch();
 
-        player = new Player(new Rectangle(950, 350, 64, 16));
-        ball = new Ball(new Rectangle(950, 700, 20, 20));
-
-        ceiling = new Ceiling();
-        rightWall = new Wall(new Rectangle(1467, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT));
-        leftWall = new Wall(new Rectangle(453, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT));
+        player = new Player(new Rectangle(925, 350, 64, 16));
+        ball = new Ball(new Rectangle(925, 700, 20, 20));
 
         winSound = AssetsHelper.loadSound("win.wav");
 
@@ -100,8 +89,12 @@ public class GameScreen extends ScreenAdapter {
         player.update(deltaTime);
         ball.update(deltaTime);
 
-        for (Brick brick : bricks)
+        ball.hasPlayerCollision(player);
+
+        for (Brick brick : bricks){
             brick.update();
+            brick.hasBallCollision(ball);
+        }
     }
 
     private void gameOver() {
@@ -128,7 +121,6 @@ public class GameScreen extends ScreenAdapter {
             draw();
         } else {
 
-//            The act method is necessary if we want that the button react to the hover animation.
             pauseMenu.stage.act();
             pauseMenu.stage.draw();
         }
@@ -149,11 +141,11 @@ public class GameScreen extends ScreenAdapter {
             brick.draw(batch);
 
         player.draw(batch);
+
         ball.draw(batch);
 
         batch.end();
 
-//            The drawing of the hud stage should be put outside our main spriteBatch.
         hud.stage.draw();
     }
 
@@ -166,9 +158,6 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void dispose() {
 
-        rightWall.dispose();
-        leftWall.dispose();
-        ceiling.dispose();
         player.dispose();
         ball.dispose();
         hud.dispose();

@@ -28,16 +28,16 @@ public class Ball extends GameObject {
     private void resetBallPosition(){
         velocity.set(getRandomDirection(), -1);
 
-        bounds.x = initialPosition.x;
-        bounds.y = initialPosition.y;
+        actualBounds.x = initialPosition.x;
+        actualBounds.y = initialPosition.y;
     }
 
     public void update(float deltaTime){
 
-        bounds.x += velocity.x * speed * deltaTime;
-        bounds.y += velocity.y * speed * deltaTime;
+        actualBounds.x += velocity.x * speed * deltaTime;
+        actualBounds.y += velocity.y * speed * deltaTime;
 
-        if (livesQuantity > -1 && bounds.y < 200){
+        if (livesQuantity > -1 && actualBounds.y < 200){
 
             if (livesQuantity > 0){
                 collisionSound.play(0.5f);
@@ -49,6 +49,33 @@ public class Ball extends GameObject {
 
         if (Gdx.input.isKeyPressed(Input.Keys.R))
             resetBallPosition();
+
+        manageScreenBoundariesCollision();
+    }
+
+    private void manageScreenBoundariesCollision() {
+
+        boolean hasRightCollision = actualBounds.x > 1425;
+        boolean hasLeftCollision = actualBounds.x < 480;
+        boolean hasTopCollision = actualBounds.y > 930;
+
+        if (hasLeftCollision || hasRightCollision)
+            reverseVelocityX();
+
+        else if (hasTopCollision) {
+            reverseVelocityY();
+        }
+    }
+
+    public void hasPlayerCollision(Player player){
+
+        boolean hasCollision = actualBounds.overlaps(player.getBounds());
+
+        if (hasCollision){
+
+            player.hitTheBall();
+            reverseVelocityY();
+        }
     }
 
     public void reverseVelocityX(){velocity.x *= -1;}

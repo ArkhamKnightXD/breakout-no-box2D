@@ -12,7 +12,7 @@ public class Brick extends GameObject {
     public Brick(int positionX, int positionY, String spritePath, int brickPoints) {
         super(
             new Rectangle(
-                515 + positionX,
+                483 + positionX,
                 900 - positionY, 64, 20
             ), spritePath, "okay.wav"
         );
@@ -34,7 +34,18 @@ public class Brick extends GameObject {
     public void draw(Batch batch) {
 
         if (!isDestroyed)
-            batch.draw(sprite, bounds.x, bounds.y, bounds.width, bounds.height);
+            batch.draw(sprite, actualBounds.x, actualBounds.y, actualBounds.width, actualBounds.height);
+    }
+
+    public void hasBallCollision(Ball ball){
+
+        boolean hasCollision = actualBounds.overlaps(ball.getBounds());
+
+        if (hasCollision){
+
+            ball.reverseVelocityY();
+            hitByTheBall();
+        }
     }
 
     public void hitByTheBall() {
