@@ -89,11 +89,11 @@ public class GameScreen extends ScreenAdapter {
         player.update(deltaTime);
         ball.update(deltaTime);
 
-        ball.hasPlayerCollision(player);
+        ball.hasCollisionWithPlayer(player);
 
         for (Brick brick : bricks){
             brick.update();
-            brick.hasBallCollision(ball);
+            brick.hasCollisionWithBall(ball);
         }
     }
 
@@ -139,9 +139,9 @@ public class GameScreen extends ScreenAdapter {
         for (Brick brick : bricks)
             brick.draw(batch);
 
-        player.draw(batch);
-
         ball.draw(batch);
+
+        player.draw(batch);
 
         batch.end();
 

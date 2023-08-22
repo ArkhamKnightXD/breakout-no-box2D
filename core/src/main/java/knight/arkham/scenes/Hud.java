@@ -12,7 +12,6 @@ import knight.arkham.objects.Ball;
 import knight.arkham.objects.Player;
 
 public class Hud {
-
     public final Stage stage;
     private static Label scoreLabel;
     private static Label livesLabel;

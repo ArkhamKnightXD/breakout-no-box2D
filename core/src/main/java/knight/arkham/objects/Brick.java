@@ -34,12 +34,12 @@ public class Brick extends GameObject {
     public void draw(Batch batch) {
 
         if (!isDestroyed)
-            batch.draw(sprite, actualBounds.x, actualBounds.y, actualBounds.width, actualBounds.height);
+            super.draw(batch);
     }
 
-    public void hasBallCollision(Ball ball){
+    public void hasCollisionWithBall(Ball ball){
 
-        boolean hasCollision = actualBounds.overlaps(ball.getBounds());
+        boolean hasCollision = actualBounds.overlaps(ball.actualBounds);
 
         if (!isDestroyed && hasCollision){
 

@@ -74,9 +74,9 @@ public class Ball extends GameObject {
         }
     }
 
-    public void hasPlayerCollision(Player player){
+    public void hasCollisionWithPlayer(Player player){
 
-        boolean hasCollision = actualBounds.overlaps(player.getBounds());
+        boolean hasCollision = actualBounds.overlaps(player.actualBounds);
 
         if (hasCollision){
 

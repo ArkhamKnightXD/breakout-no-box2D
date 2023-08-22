@@ -11,7 +11,6 @@ public class Player extends GameObject {
     public Player(Rectangle bounds) {
         super(bounds, "images/players.png", "drop.wav");
         speed = 500;
-        score = 0;
     }
 
     public void update(float deltaTime) {
@@ -27,7 +26,6 @@ public class Player extends GameObject {
     }
 
     public void hitTheBall() {
-
         collisionSound.play(0.6f);
     }
 }

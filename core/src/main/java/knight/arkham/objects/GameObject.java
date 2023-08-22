@@ -8,8 +8,8 @@ import knight.arkham.helpers.AssetsHelper;
 
 public abstract class GameObject {
     protected final Rectangle actualBounds;
-    protected final Texture sprite;
     protected final Sound collisionSound;
+    private final Texture sprite;
 
     protected GameObject(Rectangle bounds, String spritePath, String soundPath) {
         actualBounds = bounds;
@@ -21,8 +21,6 @@ public abstract class GameObject {
 
         batch.draw(sprite, actualBounds.x, actualBounds.y, actualBounds.width, actualBounds.height);
     }
-
-    public Rectangle getBounds() {return actualBounds;}
 
     public void dispose() {
         sprite.dispose();
