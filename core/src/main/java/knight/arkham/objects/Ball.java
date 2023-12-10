@@ -17,6 +17,7 @@ public class Ball extends GameObject {
 
     public Ball(Rectangle bounds) {
         super(bounds, "images/ball.png", "fall.wav");
+
         speed = 250;
         velocity = new Vector2(getRandomDirection(), -1);
         livesQuantity = 2;
@@ -25,11 +26,11 @@ public class Ball extends GameObject {
     }
 
     private float getRandomDirection(){
-
         return (Math.random() < 0.5) ? 1 : -1;
     }
 
-    private void resetBallPosition(){
+    private void resetBallPosition() {
+
         velocity.set(getRandomDirection(), -1);
 
         actualBounds.x = initialPosition.x;
@@ -69,9 +70,8 @@ public class Ball extends GameObject {
             boundariesCollisionSound.play();
         }
 
-        else if (hasTopCollision) {
+        else if (hasTopCollision)
             reverseVelocityY();
-        }
     }
 
     public void hasCollisionWithPlayer(Player player){

@@ -91,10 +91,8 @@ public class GameScreen extends ScreenAdapter {
 
         ball.hasCollisionWithPlayer(player);
 
-        for (Brick brick : bricks){
-            brick.update();
-            brick.hasCollisionWithBall(ball);
-        }
+        for (Brick brick : bricks)
+            brick.checkCollisionWithBall(ball);
     }
 
     @Override

@@ -18,7 +18,6 @@ public abstract class GameObject {
     }
 
     public void draw(Batch batch) {
-
         batch.draw(sprite, actualBounds.x, actualBounds.y, actualBounds.width, actualBounds.height);
     }
 
